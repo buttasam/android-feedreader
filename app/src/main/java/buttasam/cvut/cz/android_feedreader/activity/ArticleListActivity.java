@@ -1,7 +1,9 @@
 package buttasam.cvut.cz.android_feedreader.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import buttasam.cvut.cz.android_feedreader.R;
 
@@ -11,5 +13,10 @@ public class ArticleListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
+    }
+
+    public void showArticleDetail(View view) {
+        Intent intent = new Intent(this, ArticleDetailActivity.class);
+        startActivity(intent);
     }
 }
