@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/articles"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="buttasam.cvut.cz.android_feedreader.activity.ArticleListActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
+        <fragment
+            android:id="@+id/fragment_article_list"
+            android:name="buttasam.cvut.cz.android_feedreader.fragment.ArticleListFragment"
+            tools:layout="@layout/fragment_article_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:text="Aktualita 1"
-            android:onClick="showArticleDetail"
-            />
-    </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+            android:layout_height="match_parent" />
+
+</LinearLayout>
