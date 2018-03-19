@@ -7,13 +7,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import buttasam.cvut.cz.android_feedreader.R;
 import buttasam.cvut.cz.android_feedreader.activity.ArticleDetailActivity;
+import buttasam.cvut.cz.android_feedreader.model.Article;
+import buttasam.cvut.cz.android_feedreader.service.ArticleMockService;
+import buttasam.cvut.cz.android_feedreader.service.ArticleService;
 
 
 public class ArticleListFragment extends Fragment {
 
+
+    private ArticleService articleService= new ArticleMockService();
 
     public ArticleListFragment() {
         // Required empty public constructor
@@ -31,6 +38,14 @@ public class ArticleListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        LinearLayout layout = getActivity().findViewById(R.id.layout_fragment_article_list);
+
+
+        for(Article article : articleService.downloadNewArticles()) {
+            addArticleView(article, layout);
+        }
+
+
         // set listeners
         getActivity().findViewById(R.id.textView).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +53,16 @@ public class ArticleListFragment extends Fragment {
                 showArticleDetail(v);
             }
         });
+    }
+
+
+    public void addArticleView(Article article, LinearLayout layout) {
+        View articleView = getLayoutInflater().inflate(R.layout.article, null);
+
+        TextView textView = articleView.findViewById(R.id.article_title);
+        textView.setText(article.getTitle());
+
+        layout.addView(articleView);
     }
 
     public void showArticleDetail(View view) {
