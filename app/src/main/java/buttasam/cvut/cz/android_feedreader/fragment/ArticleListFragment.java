@@ -45,22 +45,24 @@ public class ArticleListFragment extends Fragment {
             addArticleView(article, layout);
         }
 
-
-        // set listeners
-        getActivity().findViewById(R.id.textView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showArticleDetail(v);
-            }
-        });
     }
 
 
     public void addArticleView(Article article, LinearLayout layout) {
         View articleView = getLayoutInflater().inflate(R.layout.article, null);
 
-        TextView textView = articleView.findViewById(R.id.article_title);
-        textView.setText(article.getTitle());
+        TextView title = articleView.findViewById(R.id.article_title);
+        title.setText(article.getTitle());
+
+        TextView content = articleView.findViewById(R.id.article_content);
+        content.setText(article.getContent());
+
+        articleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showArticleDetail(v);
+            }
+        });
 
         layout.addView(articleView);
     }
