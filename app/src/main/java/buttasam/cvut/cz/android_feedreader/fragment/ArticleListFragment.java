@@ -20,7 +20,7 @@ import buttasam.cvut.cz.android_feedreader.service.ArticleService;
 public class ArticleListFragment extends Fragment {
 
 
-    private ArticleService articleService= new ArticleMockService();
+    private ArticleService articleService = new ArticleMockService();
 
     public ArticleListFragment() {
         // Required empty public constructor
