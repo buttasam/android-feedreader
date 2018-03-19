@@ -11,4 +11,6 @@ public interface ArticleService {
 
     List<Article> downloadNewArticles();
 
+    Article articleById(int id);
+
 }

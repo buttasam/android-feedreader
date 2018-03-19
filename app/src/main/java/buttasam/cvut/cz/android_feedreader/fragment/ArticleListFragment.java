@@ -19,6 +19,7 @@ import buttasam.cvut.cz.android_feedreader.service.ArticleService;
 
 public class ArticleListFragment extends Fragment {
 
+    public static final String ARTICLE_ID = "article_id";
 
     private ArticleService articleService = new ArticleMockService();
 
@@ -69,6 +70,8 @@ public class ArticleListFragment extends Fragment {
 
     public void showArticleDetail(View view) {
         Intent intent = new Intent(getActivity(), ArticleDetailActivity.class);
+        intent.putExtra(ARTICLE_ID, 1);
+
         startActivity(intent);
     }
 
