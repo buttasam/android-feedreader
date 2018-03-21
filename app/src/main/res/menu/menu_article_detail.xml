@@ -5,7 +5,6 @@
     <item
         android:id="@+id/topbar_share"
         android:title="Share"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
 
 </menu>
