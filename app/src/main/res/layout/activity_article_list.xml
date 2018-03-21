@@ -9,6 +9,15 @@
     tools:context="buttasam.cvut.cz.android_feedreader.activity.ArticleListActivity">
 
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
         <fragment
             android:id="@+id/fragment_article_list"
             android:name="buttasam.cvut.cz.android_feedreader.fragment.ArticleListFragment"
