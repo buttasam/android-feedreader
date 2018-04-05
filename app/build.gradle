@@ -28,4 +28,6 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.16.20'
     annotationProcessor 'org.projectlombok:lombok:1.16.20'
+
+    compile group: 'com.rometools', name: 'rome', version: '1.9.0'
 }

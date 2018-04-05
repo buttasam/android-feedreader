@@ -15,6 +15,7 @@ import java.util.List;
 
 import buttasam.cvut.cz.android_feedreader.R;
 import buttasam.cvut.cz.android_feedreader.activity.ArticleDetailActivity;
+import buttasam.cvut.cz.android_feedreader.api.FeedReaderTask;
 import buttasam.cvut.cz.android_feedreader.model.Article;
 import buttasam.cvut.cz.android_feedreader.service.ArticleMockService;
 import buttasam.cvut.cz.android_feedreader.service.ArticleService;
@@ -70,6 +71,8 @@ public class ArticlesFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+
+            new FeedReaderTask().execute("http://servis.idnes.cz/rss.aspx?c=technet");
 
             Intent intent = new Intent(getContext(), ArticleDetailActivity.class);
             intent.putExtra(ArticleDetailActivity.ARTICLE_ID, articleId);
