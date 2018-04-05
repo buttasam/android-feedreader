@@ -1,31 +1,22 @@
 package buttasam.cvut.cz.android_feedreader.model;
 
+import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author Samuel Butta
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Article {
-
+    private Integer id;
     private String title;
+    private String author;
+    private Date date;
     private String content;
-
-    public Article(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+    private String url;
 }

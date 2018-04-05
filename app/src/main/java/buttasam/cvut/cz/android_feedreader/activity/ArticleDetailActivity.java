@@ -1,49 +1,34 @@
 package buttasam.cvut.cz.android_feedreader.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import buttasam.cvut.cz.android_feedreader.R;
-import buttasam.cvut.cz.android_feedreader.fragment.ArticleListFragment;
+import buttasam.cvut.cz.android_feedreader.fragment.ArticleDetailFragment;
 
 public class ArticleDetailActivity extends AppCompatActivity {
+
+    public static final String ARTICLE_ID = "ARTICLE_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
 
-        int id = getIntent().getExtras().getInt(ArticleListFragment.ARTICLE_ID);
-        System.out.println(id);
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.findFragmentById(R.id.frame) == null) {
+            FragmentTransaction transaction = manager.beginTransaction();
 
-        // enable back button
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+            Bundle args = new Bundle();
+            args.putLong(ArticleDetailFragment.ARTICLE_ID, getIntent().getLongExtra(ARTICLE_ID, 0));
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_article_detail, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-
+            transaction.add(R.id.frame, Fragment.instantiate(this, ArticleDetailFragment.class.getName(), args));
+            transaction.commit();
         }
     }
+
+
 }

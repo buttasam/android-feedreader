@@ -1,13 +1,18 @@
 package buttasam.cvut.cz.android_feedreader.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import buttasam.cvut.cz.android_feedreader.R;
@@ -19,39 +24,56 @@ import buttasam.cvut.cz.android_feedreader.service.ArticleService;
 
 public class ArticleDetailFragment extends Fragment {
 
+    public static final String ARTICLE_ID = "ARTICLE_ID";
 
     private ArticleService articleService = new ArticleMockService();
-
-
-    public ArticleDetailFragment() {
-        // Required empty public constructor
-    }
-
+    public Article article;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_article_detail, container, false);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        long articleId = getArguments().getLong(ARTICLE_ID);
+        article = articleService.articleById((int) articleId);
+
+        setHasOptionsMenu(article != null);
     }
 
-
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
-        Article article = articleService.articleById(1);
+        TextView title = view.findViewById(R.id.titleView);
+        TextView author = view.findViewById(R.id.authorView);
+        TextView content = view.findViewById(R.id.contentView);
 
-        LinearLayout layout = getActivity().findViewById(R.id.layout_fragment_article_detail);
-        View articleView = getLayoutInflater().inflate(R.layout.article, null);
+        CharSequence date = DateUtils.getRelativeTimeSpanString(getContext(), article.getDate().getTime());
 
-        TextView title = articleView.findViewById(R.id.article_title);
         title.setText(article.getTitle());
-
-        TextView content = articleView.findViewById(R.id.article_content);
+        author.setText(getString(R.string.article_subtitle, date, article.getAuthor()));
         content.setText(article.getContent());
 
-        layout.addView(articleView);
+        return view;
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.share, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.share_menu:
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message, article.getTitle(), article.getUrl()));
+                Intent chooser = Intent.createChooser(shareIntent, getString(R.string.share));
+                startActivity(chooser);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
