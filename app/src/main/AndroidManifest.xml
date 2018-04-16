@@ -19,6 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ArticleDetailActivity"></activity>
+
+        <provider
+            android:name="buttasam.cvut.cz.android_feedreader.database.ReaderContentProvider"
+            android:authorities="buttasam.cvut.cz"
+            android:exported="false" />
     </application>
 
 </manifest>

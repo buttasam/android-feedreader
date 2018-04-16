@@ -12,7 +12,7 @@ public class ReaderContentProvider extends ContentProvider {
 
 	private ReaderDatabaseHelper mDbHelper;
 
-	public static final String AUTHORITY = "cz.cvut.fitmag";
+	public static final String AUTHORITY = "buttasam.cvut.cz";
 
 	private static final int ARTICLE_LIST = 1;
 	private static final int ARTICLE_ID = 2;

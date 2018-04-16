@@ -24,7 +24,7 @@ public class ArticleTable {
             + AUTHOR + " text not null, "
             + DATE + " text not null, "
             + CONTENT + " text not null, "
-            + URL + " text not null, "
+            + URL + " text not null"
             + ");";
 
     public static void onCreate(SQLiteDatabase db) {
