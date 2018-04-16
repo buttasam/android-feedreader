@@ -5,9 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
+ * Helper class crete or update database after application start.
+ *
  * @author Samuel Butta
  */
-
 public class ReaderDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "feedreader.db";
