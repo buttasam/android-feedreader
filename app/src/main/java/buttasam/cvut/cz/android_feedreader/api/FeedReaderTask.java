@@ -11,11 +11,20 @@ import com.rometools.rome.io.XmlReader;
 import java.io.IOException;
 import java.net.URL;
 
+import buttasam.cvut.cz.android_feedreader.model.Article;
+import buttasam.cvut.cz.android_feedreader.service.ArticleService;
+
 /**
  * @author Samuel Butta
  */
 
 public class FeedReaderTask extends AsyncTask<String, Void, Void> {
+
+    private final ArticleService articleService;
+
+    public FeedReaderTask(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
 
     @Override
@@ -24,7 +33,14 @@ public class FeedReaderTask extends AsyncTask<String, Void, Void> {
             SyndFeed feed = downloadFeed(url);
 
             for(SyndEntry entry: feed.getEntries()) {
-                System.out.println(entry.getTitle());
+                Article article = new Article();
+                article.setTitle(entry.getTitle());
+                article.setAuthor(entry.getAuthor());
+                article.setDate(entry.getPublishedDate());
+                article.setContent(entry.getContents().toString());
+                article.setUrl(entry.getUri());
+
+                articleService.saveArticle(article);
             }
         }
         return null;

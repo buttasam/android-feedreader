@@ -9,7 +9,9 @@ import buttasam.cvut.cz.android_feedreader.model.Article;
  */
 public interface ArticleService {
 
-    List<Article> downloadNewArticles();
+    void saveArticle(Article article);
+
+    List<Article> allArticles();
 
     Article articleById(int id);
 

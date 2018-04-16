@@ -28,7 +28,12 @@ public class ArticleMockService implements ArticleService {
     }
 
     @Override
-    public List<Article> downloadNewArticles() {
+    public void saveArticle(Article article) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<Article> allArticles() {
         return new ArrayList<Article>(dummyData.values());
     }
 

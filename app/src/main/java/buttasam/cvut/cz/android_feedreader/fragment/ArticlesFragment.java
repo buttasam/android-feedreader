@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -20,26 +21,27 @@ import buttasam.cvut.cz.android_feedreader.R;
 import buttasam.cvut.cz.android_feedreader.activity.ArticleDetailActivity;
 import buttasam.cvut.cz.android_feedreader.api.FeedReaderTask;
 import buttasam.cvut.cz.android_feedreader.model.Article;
-import buttasam.cvut.cz.android_feedreader.service.ArticleMockService;
 import buttasam.cvut.cz.android_feedreader.service.ArticleService;
+import buttasam.cvut.cz.android_feedreader.service.ArticleServiceImpl;
 
 
 public class ArticlesFragment extends Fragment {
 
-    private ArticleService articleService = new ArticleMockService();
-
+    private ArticleService articleService;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
+
+        this.articleService = new ArticleServiceImpl(getActivity().getContentResolver());
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_articles, container, false);
 
-        List<View> articleViews = generateViews(inflater, container, articleService.downloadNewArticles());
+        List<View> articleViews = generateViews(inflater, container, articleService.allArticles());
 
         for (View articleView : articleViews) {
             layout.addView(articleView);
@@ -79,9 +81,6 @@ public class ArticlesFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-
-            new FeedReaderTask().execute("http://servis.idnes.cz/rss.aspx?c=technet");
-
             Intent intent = new Intent(getContext(), ArticleDetailActivity.class);
             intent.putExtra(ArticleDetailActivity.ARTICLE_ID, articleId);
             startActivity(intent);
@@ -93,4 +92,18 @@ public class ArticlesFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.articles, menu);
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.reload_menu:
+                FeedReaderTask task = new FeedReaderTask(articleService);
+                task.execute("http://servis.idnes.cz/rss.aspx?c=technet");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

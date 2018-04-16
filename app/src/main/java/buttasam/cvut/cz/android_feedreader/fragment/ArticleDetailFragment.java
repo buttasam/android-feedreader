@@ -17,22 +17,21 @@ import android.widget.TextView;
 
 import buttasam.cvut.cz.android_feedreader.R;
 import buttasam.cvut.cz.android_feedreader.model.Article;
-import buttasam.cvut.cz.android_feedreader.service.ArticleMockService;
 import buttasam.cvut.cz.android_feedreader.service.ArticleService;
-
+import buttasam.cvut.cz.android_feedreader.service.ArticleServiceImpl;
 
 
 public class ArticleDetailFragment extends Fragment {
 
     public static final String ARTICLE_ID = "ARTICLE_ID";
 
-    private ArticleService articleService = new ArticleMockService();
+    private ArticleService articleService;
     public Article article;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.articleService = new ArticleServiceImpl(getActivity().getContentResolver());
 
         long articleId = getArguments().getLong(ARTICLE_ID);
         article = articleService.articleById((int) articleId);
