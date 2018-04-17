@@ -10,6 +10,11 @@
             android:orderInCategory="1"
             android:id="@+id/menu_configure_feeds"
             android:checkable="false" />
+        <item
+            android:title="@string/menu_delete_articles"
+            android:orderInCategory="1"
+            android:id="@+id/menu_delete_articles"
+            android:checkable="false" />
     </group>
     <item
         android:id="@+id/reload_menu"

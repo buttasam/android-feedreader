@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,7 +52,7 @@ public class ArticleDetailFragment extends Fragment {
 
         title.setText(article.getTitle());
         author.setText(getString(R.string.article_subtitle, date, article.getAuthor()));
-        content.setText(article.getContent());
+        content.setText(Html.fromHtml(article.getContent()).toString());
 
         return view;
     }

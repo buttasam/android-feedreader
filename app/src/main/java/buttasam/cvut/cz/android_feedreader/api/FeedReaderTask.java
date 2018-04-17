@@ -31,13 +31,18 @@ public class FeedReaderTask extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... urls) {
         for (String url : urls) {
             SyndFeed feed = downloadFeed(url);
-
             for(SyndEntry entry: feed.getEntries()) {
                 Article article = new Article();
                 article.setTitle(entry.getTitle());
                 article.setAuthor(entry.getAuthor());
                 article.setDate(entry.getPublishedDate());
-                article.setContent(entry.getContents().toString());
+                String content = "";
+                if(entry.getContents().size() > 0) {
+                    content = entry.getContents().get(0).getValue();
+                } else if (entry.getDescription() != null) {
+                    content = entry.getDescription().getValue();
+                }
+                article.setContent(content);
                 article.setUrl(entry.getUri());
 
                 articleService.saveArticle(article);

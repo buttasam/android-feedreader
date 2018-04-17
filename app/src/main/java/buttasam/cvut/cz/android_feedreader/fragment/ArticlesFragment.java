@@ -105,6 +105,10 @@ public class ArticlesFragment extends Fragment {
             case R.id.menu_configure_feeds:
                 startActivity(new Intent(getContext(), FeedActivity.class));
                 return true;
+            case R.id.menu_delete_articles:
+                articleService.deleteArticles();
+                startActivity(new Intent(getContext(), ArticleListActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
