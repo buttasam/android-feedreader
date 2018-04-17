@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import buttasam.cvut.cz.android_feedreader.AddFeedResourceActivity;
+import buttasam.cvut.cz.android_feedreader.activity.AddFeedResourceActivity;
 import buttasam.cvut.cz.android_feedreader.R;
 
 

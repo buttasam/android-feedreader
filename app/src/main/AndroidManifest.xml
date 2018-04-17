@@ -26,7 +26,7 @@
             android:exported="false" />
 
         <activity android:name=".activity.FeedActivity" />
-        <activity android:name=".AddFeedResourceActivity"></activity>
+        <activity android:name=".activity.AddFeedResourceActivity"></activity>
     </application>
 
 </manifest>
