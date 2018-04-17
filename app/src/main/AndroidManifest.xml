@@ -25,7 +25,8 @@
             android:authorities="buttasam.cvut.cz"
             android:exported="false" />
 
-        <activity android:name=".activity.FeedActivity"></activity>
+        <activity android:name=".activity.FeedActivity" />
+        <activity android:name=".AddFeedResourceActivity"></activity>
     </application>
 
 </manifest>

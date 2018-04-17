@@ -63,10 +63,7 @@ public class ArticlesFragment extends Fragment {
     private View generateView(LayoutInflater inflater, ViewGroup parent, Article article) {
         View view = inflater.inflate(R.layout.article_preview, parent);
         TextView title = view.findViewById(R.id.preview_title);
-        TextView content = view.findViewById(R.id.preview_content);
-
         title.setText(article.getTitle());
-        content.setText(article.getContent());
 
         view.setOnClickListener(new ArticleOnClickListener(article.getId()));
 

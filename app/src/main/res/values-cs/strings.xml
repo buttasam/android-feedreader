@@ -4,4 +4,7 @@
     <string name="article_subtitle">%s , autor: %s</string>
     <string name="share_message">Článek \'%s\' dostupný na %s</string>
     <string name="menu_configure_feeds">Správa zdrojů</string>
+    <string name="button_add_resource" />
+    <string name="label_address">Url adresa</string>
+    <string name="label_title">Název</string>
 </resources>

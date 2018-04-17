@@ -11,16 +11,8 @@
         android:padding="10dp"
         android:text="Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textSize="18sp" />
+        android:textSize="18sp"
 
-    <TextView
-        android:id="@+id/preview_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:padding="10dp"
-        android:text="Content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
-        android:textSize="12sp" />
+        />
+
 </LinearLayout>
