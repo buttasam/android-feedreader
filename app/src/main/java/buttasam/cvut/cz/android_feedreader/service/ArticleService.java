@@ -11,6 +11,8 @@ public interface ArticleService {
 
     void saveArticle(Article article);
 
+    void deleteArticles();
+
     List<Article> allArticles();
 
     Article articleById(int id);

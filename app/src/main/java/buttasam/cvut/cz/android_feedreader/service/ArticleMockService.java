@@ -33,6 +33,11 @@ public class ArticleMockService implements ArticleService {
     }
 
     @Override
+    public void deleteArticles() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public List<Article> allArticles() {
         return new ArrayList<Article>(dummyData.values());
     }

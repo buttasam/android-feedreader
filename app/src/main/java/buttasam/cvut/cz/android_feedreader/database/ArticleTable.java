@@ -44,6 +44,8 @@ public class ArticleTable {
         onCreate(db);
     }
 
-
+    public static void clearTable(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ARTICLE);
+    }
 
 }

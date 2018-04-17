@@ -40,6 +40,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public void deleteArticles() {
+        contentResolver.delete(ReaderContentProvider.CONTENT_URI, null, new String[]{} );
+    }
+
+    @Override
     public List<Article> allArticles() {
         Cursor cursor = contentResolver.query(ReaderContentProvider.CONTENT_URI,
                 new String[]{ArticleTable.ID, ArticleTable.TITLE, ArticleTable.AUTHOR, ArticleTable.DATE, ArticleTable.CONTENT, ArticleTable.URL}, null, null, null);
