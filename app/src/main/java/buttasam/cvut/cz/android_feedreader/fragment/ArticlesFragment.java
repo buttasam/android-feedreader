@@ -20,6 +20,7 @@ import java.util.List;
 import buttasam.cvut.cz.android_feedreader.R;
 import buttasam.cvut.cz.android_feedreader.activity.ArticleDetailActivity;
 import buttasam.cvut.cz.android_feedreader.activity.ArticleListActivity;
+import buttasam.cvut.cz.android_feedreader.activity.FeedActivity;
 import buttasam.cvut.cz.android_feedreader.api.FeedReaderTask;
 import buttasam.cvut.cz.android_feedreader.model.Article;
 import buttasam.cvut.cz.android_feedreader.service.ArticleService;
@@ -102,8 +103,10 @@ public class ArticlesFragment extends Fragment {
                 FeedReaderTask task = new FeedReaderTask(articleService);
                 task.execute("http://servis.idnes.cz/rss.aspx?c=technet");
 
-                Intent intent = new Intent(getContext(), ArticleListActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getContext(), ArticleListActivity.class));
+                return true;
+            case R.id.menu_configure_feeds:
+                startActivity(new Intent(getContext(), FeedActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

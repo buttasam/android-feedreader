@@ -3,4 +3,5 @@
     <string name="share">Sdílet</string>
     <string name="article_subtitle">%s , autor: %s</string>
     <string name="share_message">Článek \'%s\' dostupný na %s</string>
+    <string name="menu_configure_feeds">Správa zdrojů</string>
 </resources>

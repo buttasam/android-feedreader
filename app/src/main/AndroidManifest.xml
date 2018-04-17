@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="buttasam.cvut.cz.android_feedreader">
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -18,12 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ArticleDetailActivity"></activity>
+        <activity android:name=".activity.ArticleDetailActivity" />
 
         <provider
-            android:name="buttasam.cvut.cz.android_feedreader.database.ReaderContentProvider"
+            android:name=".database.ReaderContentProvider"
             android:authorities="buttasam.cvut.cz"
             android:exported="false" />
+
+        <activity android:name=".activity.FeedActivity"></activity>
     </application>
 
 </manifest>

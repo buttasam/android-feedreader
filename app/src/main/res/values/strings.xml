@@ -3,4 +3,5 @@
     <string name="share">share</string>
     <string name="article_subtitle">%s by %s</string>
     <string name="share_message">Article \'%s\' available at %s</string>
+    <string name="menu_configure_feeds">Configure feeds</string>
 </resources>
