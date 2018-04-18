@@ -15,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import buttasam.cvut.cz.android_feedreader.R;
@@ -36,11 +35,16 @@ public class ArticlesFragment extends Fragment implements LoaderManager.LoaderCa
 
     private ListView mListView;
     private ArticleCursorAdapter mAdapter;
+    private MenuItem refreshMenuItem;
+    private View mProgressActionView;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mProgressActionView = LayoutInflater.from(getActivity()).inflate(R.layout.action_view_progress,
+                null);
 
         setRetainInstance(true);
         setHasOptionsMenu(true);
@@ -62,7 +66,7 @@ public class ArticlesFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return (LinearLayout) inflater.inflate(R.layout.fragment_articles, container, false);
+        return inflater.inflate(R.layout.fragment_articles, container, false);
     }
 
 
@@ -110,6 +114,7 @@ public class ArticlesFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.articles, menu);
+        refreshMenuItem = menu.findItem(R.id.reload_menu);
     }
 
 
@@ -132,7 +137,7 @@ public class ArticlesFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     public void refreshFeed() {
-        FeedReaderTask task = new FeedReaderTask(articleService);
+        FeedReaderTask task = new FeedReaderTask(articleService, this.refreshMenuItem, mProgressActionView);
         task.execute();
     }
 

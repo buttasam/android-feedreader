@@ -1,6 +1,8 @@
 package buttasam.cvut.cz.android_feedreader.api;
 
 import android.os.AsyncTask;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -24,11 +26,29 @@ public class FeedReaderTask extends AsyncTask<String, Void, Void> {
 
     private final ArticleService articleService;
     private final FeedService feedService = new FeedMockService();
+    private MenuItem refreshMenuItem;
+    private View mProgressActionView;
 
-    public FeedReaderTask(ArticleService articleService) {
+
+    public FeedReaderTask(ArticleService articleService, MenuItem refreshMenuItem, View mProgressActionView) {
         this.articleService = articleService;
+        this.refreshMenuItem = refreshMenuItem;
+        this.mProgressActionView = mProgressActionView;
     }
 
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        refreshMenuItem.setActionView(mProgressActionView);
+    }
+
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        refreshMenuItem.setActionView(null);
+    }
 
     @Override
     protected Void doInBackground(String... urls) {

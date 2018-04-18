@@ -19,8 +19,7 @@
     <item
         android:id="@+id/reload_menu"
         android:icon="@drawable/ic_autorenew"
-        android:title="@string/share"
-        app:showAsAction="ifRoom|withText" />
-
+        app:showAsAction="ifRoom|withText"
+        android:title="" />
 
 </menu>
