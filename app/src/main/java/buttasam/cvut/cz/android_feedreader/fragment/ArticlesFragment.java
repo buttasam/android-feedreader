@@ -1,10 +1,14 @@
 package buttasam.cvut.cz.android_feedreader.fragment;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,80 +16,96 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.ListView;
 
 import buttasam.cvut.cz.android_feedreader.R;
-import buttasam.cvut.cz.android_feedreader.activity.ArticleDetailActivity;
 import buttasam.cvut.cz.android_feedreader.activity.ArticleListActivity;
 import buttasam.cvut.cz.android_feedreader.activity.FeedActivity;
 import buttasam.cvut.cz.android_feedreader.api.FeedReaderTask;
-import buttasam.cvut.cz.android_feedreader.model.Article;
+import buttasam.cvut.cz.android_feedreader.database.ArticleTable;
+import buttasam.cvut.cz.android_feedreader.database.ReaderContentProvider;
+import buttasam.cvut.cz.android_feedreader.fragment.adapter.ArticleCursorAdapter;
 import buttasam.cvut.cz.android_feedreader.service.ArticleService;
 import buttasam.cvut.cz.android_feedreader.service.ArticleServiceImpl;
 
 
-public class ArticlesFragment extends Fragment {
+public class ArticlesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private ArticleService articleService;
+    private final int ARTICLE_LOADER = 1;
+
+    private ListView mListView;
+    private ArticleCursorAdapter mAdapter;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setRetainInstance(true);
         setHasOptionsMenu(true);
 
         this.articleService = new ArticleServiceImpl(getActivity().getContentResolver());
     }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mListView = getActivity().findViewById(R.id.articles_content);
+        mAdapter = new ArticleCursorAdapter(getActivity(), null, 0);
+        mListView.setAdapter(mAdapter);
+
+        getLoaderManager().initLoader(ARTICLE_LOADER, null, this);
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_articles, container, false);
-
-        List<View> articleViews = generateViews(inflater, container, articleService.allArticles());
-
-        for (View articleView : articleViews) {
-            layout.addView(articleView);
-        }
-
-        return layout;
+        return (LinearLayout) inflater.inflate(R.layout.fragment_articles, container, false);
     }
 
-    private List<View> generateViews(LayoutInflater inflater, ViewGroup parent, List<Article> articles) {
-        List<View> articleViews = new ArrayList<>();
-        for (Article article : articles) {
-            articleViews.add(generateView(inflater, parent, article));
-        }
-        return articleViews;
-    }
 
-    private View generateView(LayoutInflater inflater, ViewGroup parent, Article article) {
-        View view = inflater.inflate(R.layout.article_preview, parent);
-        TextView title = view.findViewById(R.id.preview_title);
-        title.setText(article.getTitle());
-
-        view.setOnClickListener(new ArticleOnClickListener(article.getId()));
-
-        return view;
-    }
-
-    private class ArticleOnClickListener implements View.OnClickListener {
-
-        private long articleId;
-
-        ArticleOnClickListener(long articleId) {
-            this.articleId = articleId;
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        switch (id) {
+            case ARTICLE_LOADER:
+                return new CursorLoader(getActivity(), ReaderContentProvider.CONTENT_URI,
+                        new String[]{ArticleTable.ID, ArticleTable.TITLE, ArticleTable.AUTHOR, ArticleTable.DATE, ArticleTable.CONTENT, ArticleTable.URL},
+                        null, null, null);
+            default:
+                break;
         }
 
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getContext(), ArticleDetailActivity.class);
-            intent.putExtra(ArticleDetailActivity.ARTICLE_ID, articleId);
-            startActivity(intent);
+        return null;
+    }
 
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+        switch (loader.getId()) {
+            case ARTICLE_LOADER:
+                mAdapter.swapCursor(cursor);
+                break;
+
+            default:
+                break;
         }
     }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        switch (loader.getId()) {
+            case ARTICLE_LOADER:
+                mAdapter.swapCursor(null);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -97,10 +117,7 @@ public class ArticlesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.reload_menu:
-                FeedReaderTask task = new FeedReaderTask(articleService);
-                task.execute("http://servis.idnes.cz/rss.aspx?c=technet");
-
-                startActivity(new Intent(getContext(), ArticleListActivity.class));
+                refreshFeed();
                 return true;
             case R.id.menu_configure_feeds:
                 startActivity(new Intent(getContext(), FeedActivity.class));
@@ -112,6 +129,11 @@ public class ArticlesFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void refreshFeed() {
+        FeedReaderTask task = new FeedReaderTask(articleService);
+        task.execute();
     }
 
 }

@@ -12,15 +12,18 @@ import java.io.IOException;
 import java.net.URL;
 
 import buttasam.cvut.cz.android_feedreader.model.Article;
+import buttasam.cvut.cz.android_feedreader.model.Feed;
 import buttasam.cvut.cz.android_feedreader.service.ArticleService;
+import buttasam.cvut.cz.android_feedreader.service.FeedMockService;
+import buttasam.cvut.cz.android_feedreader.service.FeedService;
 
 /**
  * @author Samuel Butta
  */
-
 public class FeedReaderTask extends AsyncTask<String, Void, Void> {
 
     private final ArticleService articleService;
+    private final FeedService feedService = new FeedMockService();
 
     public FeedReaderTask(ArticleService articleService) {
         this.articleService = articleService;
@@ -29,8 +32,8 @@ public class FeedReaderTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... urls) {
-        for (String url : urls) {
-            SyndFeed feed = downloadFeed(url);
+        for (Feed resource: feedService.allFeeds()) {
+            SyndFeed feed = downloadFeed(resource.getUrl());
             for(SyndEntry entry: feed.getEntries()) {
                 Article article = new Article();
                 article.setTitle(entry.getTitle());
