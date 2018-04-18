@@ -13,7 +13,7 @@ import buttasam.cvut.cz.android_feedreader.service.FeedService;
 
 public class AddFeedResourceActivity extends AppCompatActivity {
 
-    private FeedService feedService = new FeedMockService();
+    private FeedService feedService = FeedMockService.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +28,7 @@ public class AddFeedResourceActivity extends AppCompatActivity {
         String title = editTitle.getText().toString();
         String url = editUrl.getText().toString();
 
-        feedService.saveFeed(new Feed(5, title, url));
-
-        System.out.println(title);
-        System.out.println(url);
-
-        System.out.println(feedService.allFeeds().size());
+        feedService.saveFeed(new Feed(feedService.allFeeds().size() + 1, title, url));
 
         startActivity(new Intent(this, FeedActivity.class));
     }

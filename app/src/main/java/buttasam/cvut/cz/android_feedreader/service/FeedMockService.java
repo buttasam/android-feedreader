@@ -14,10 +14,11 @@ import buttasam.cvut.cz.android_feedreader.model.Feed;
  */
 public class FeedMockService implements FeedService {
 
+    private static FeedMockService instance;
 
     private List<Feed> dummyData = new ArrayList<>();
 
-    public FeedMockService() {
+    private FeedMockService() {
         dummyData.add(new Feed(1, "Technet", "http://servis.idnes.cz/rss.aspx?c=technet"));
         dummyData.add(new Feed(2, "Zprávy iDNES.cz", "http://servis.idnes.cz/rss.aspx?c=zpravodaj"));
         dummyData.add(new Feed(3, "Sport iDNES.cz", "http://servis.idnes.cz/rss.aspx?c=technet"));
@@ -36,5 +37,12 @@ public class FeedMockService implements FeedService {
     @Override
     public List<Feed> allFeeds() {
         return dummyData;
+    }
+
+    public static FeedMockService getInstance() {
+        if(instance == null) {
+            instance = new FeedMockService();
+        }
+        return instance;
     }
 }

@@ -25,7 +25,7 @@ import buttasam.cvut.cz.android_feedreader.service.FeedService;
 public class FeedReaderTask extends AsyncTask<String, Void, Void> {
 
     private final ArticleService articleService;
-    private final FeedService feedService = new FeedMockService();
+    private final FeedService feedService = FeedMockService.getInstance();
     private MenuItem refreshMenuItem;
     private View mProgressActionView;
 
