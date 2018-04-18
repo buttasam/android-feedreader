@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * @author Samuel Butta
  */
-
 public class ArticleTable {
 
     public static final String TABLE_ARTICLE = "article";

@@ -26,8 +26,7 @@ public class ArticleCursorAdapter extends CursorAdapter {
 
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
-		View view = mInflater.inflate(R.layout.article_preview, parent, false);
-		return view;
+		return mInflater.inflate(R.layout.article_preview, parent, false);
 	}
 
 	@Override
@@ -39,7 +38,6 @@ public class ArticleCursorAdapter extends CursorAdapter {
 	}
 
 	public class ArticleOnClickListener implements View.OnClickListener {
-
 		private long articleId;
 
 		ArticleOnClickListener(long articleId) {

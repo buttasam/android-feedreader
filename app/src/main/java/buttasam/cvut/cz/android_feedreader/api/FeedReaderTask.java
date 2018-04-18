@@ -52,26 +52,33 @@ public class FeedReaderTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... urls) {
-        for (Feed resource: feedService.allFeeds()) {
+        for (Feed resource : feedService.allFeeds()) {
             SyndFeed feed = downloadFeed(resource.getUrl());
-            for(SyndEntry entry: feed.getEntries()) {
+            assert feed != null;
+            for (SyndEntry entry : feed.getEntries()) {
+
                 Article article = new Article();
                 article.setTitle(entry.getTitle());
                 article.setAuthor(entry.getAuthor());
                 article.setDate(entry.getPublishedDate());
-                String content = "";
-                if(entry.getContents().size() > 0) {
-                    content = entry.getContents().get(0).getValue();
-                } else if (entry.getDescription() != null) {
-                    content = entry.getDescription().getValue();
-                }
-                article.setContent(content);
+                article.setContent(cleanContent(entry));
                 article.setUrl(entry.getUri());
 
                 articleService.saveArticle(article);
             }
         }
         return null;
+    }
+
+    private String cleanContent(SyndEntry entry) {
+        String content = "";
+        if (entry.getContents().size() > 0) {
+            content = entry.getContents().get(0).getValue();
+        } else if (entry.getDescription() != null) {
+            content = entry.getDescription().getValue();
+        }
+
+        return content;
     }
 
     private SyndFeed downloadFeed(String url) {

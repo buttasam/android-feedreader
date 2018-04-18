@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Feed {
+
     private Integer id;
     private String title;
     private String url;
+
 }

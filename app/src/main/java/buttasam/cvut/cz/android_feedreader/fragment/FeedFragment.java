@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import buttasam.cvut.cz.android_feedreader.activity.AddFeedResourceActivity;
+import buttasam.cvut.cz.android_feedreader.activity.AddFeedActivity;
 import buttasam.cvut.cz.android_feedreader.R;
 import buttasam.cvut.cz.android_feedreader.model.Feed;
 import buttasam.cvut.cz.android_feedreader.service.FeedMockService;
@@ -61,7 +61,7 @@ public class FeedFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_add_feed:
-                startActivity(new Intent(getContext(), AddFeedResourceActivity.class));
+                startActivity(new Intent(getContext(), AddFeedActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

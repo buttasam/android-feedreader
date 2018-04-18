@@ -11,7 +11,7 @@ import buttasam.cvut.cz.android_feedreader.model.Feed;
 import buttasam.cvut.cz.android_feedreader.service.FeedMockService;
 import buttasam.cvut.cz.android_feedreader.service.FeedService;
 
-public class AddFeedResourceActivity extends AppCompatActivity {
+public class AddFeedActivity extends AppCompatActivity {
 
     private FeedService feedService = FeedMockService.getInstance();
 
@@ -28,7 +28,7 @@ public class AddFeedResourceActivity extends AppCompatActivity {
         String title = editTitle.getText().toString();
         String url = editUrl.getText().toString();
 
-        feedService.saveFeed(new Feed(feedService.allFeeds().size() + 1, title, url));
+        feedService.saveFeed(new Feed(feedService.allFeeds().size() + 1, title, url)); // FIXME - save to db
 
         startActivity(new Intent(this, FeedActivity.class));
     }

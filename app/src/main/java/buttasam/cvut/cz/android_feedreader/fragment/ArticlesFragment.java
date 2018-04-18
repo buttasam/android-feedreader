@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import buttasam.cvut.cz.android_feedreader.R;
-import buttasam.cvut.cz.android_feedreader.activity.ArticleListActivity;
 import buttasam.cvut.cz.android_feedreader.activity.FeedActivity;
 import buttasam.cvut.cz.android_feedreader.api.FeedReaderTask;
 import buttasam.cvut.cz.android_feedreader.database.ArticleTable;
@@ -110,7 +109,6 @@ public class ArticlesFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.articles, menu);
@@ -129,7 +127,6 @@ public class ArticlesFragment extends Fragment implements LoaderManager.LoaderCa
                 return true;
             case R.id.menu_delete_articles:
                 articleService.deleteArticles();
-                startActivity(new Intent(getContext(), ArticleListActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

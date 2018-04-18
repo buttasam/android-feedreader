@@ -13,5 +13,4 @@ public class ArticleListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_articles);
     }
 
-
 }
